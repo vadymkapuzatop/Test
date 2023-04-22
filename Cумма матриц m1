@@ -1,0 +1,44 @@
+def factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def sum_of_numbers(n):
+    return sum(range(1, n+1))
+
+class Matrix:
+    def __init__(self, rows, cols):
+        self.rows = rows
+        self.cols = cols
+        self.data = [[0 for j in range(cols)] for i in range(rows)]
+
+    def __add__(self, other):
+        result = Matrix(self.rows, self.cols)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                result.data[i][j] = self.data[i][j] + other.data[i][j]
+        return result
+
+    def __mul__(self, other):
+        if self.cols != other.rows:
+            raise ValueError("Умножение невозможно")
+        result = Matrix(self.rows, other.cols)
+        for i in range(self.rows):
+            for j in range(other.cols):
+                for k in range(self.cols):
+                    result.data[i][j] += self.data[i][k] * other.data[k][j]
+        return result
+
+m1 = Matrix(3, 3)
+m2 = Matrix(3, 3)
+m1.data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+m2.data = [[9, 8, 7], [6, 5, 4], [3, 2, 1]]
+
+m3 = m1 + m2
+m4 = m1 * m2
+
+print("Сумма матриц m1 и m2:\n", m3.data)
+print("Произведение матриц m1 и m2:\n", m4.data)
+print("Факториал числа 5:", factorial(5))
+print("Сумма чисел от 1 до 10:", sum_of_numbers(10))
